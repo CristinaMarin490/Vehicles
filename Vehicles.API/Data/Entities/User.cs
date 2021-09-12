@@ -47,5 +47,10 @@ namespace Vehicles.API.Data.Entities
 
         [Display(Name = "Usuario")]
         public string FullName => $"{FirsName} {LastName}";
+
+        public ICollection<Vehicle> Vehicles { get; set; }
+
+     
+
     }
 }

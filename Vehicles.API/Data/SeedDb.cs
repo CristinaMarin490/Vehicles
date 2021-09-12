@@ -43,7 +43,7 @@ namespace Vehicles.API.Data
                     Document = document,
                     DocumentType = _context.DocumentTypes.FirstOrDefault(x => x.Description == "Cedula"),
                     Email = email,
-                    FirsName = firstName,
+                    FirstName = firstName,
                     LastName = lastName,
                     PhoneNumber = phoneNumber,
                     UserName = email,

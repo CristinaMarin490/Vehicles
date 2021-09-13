@@ -74,7 +74,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().ImageFullPath)
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Plaque)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().VehicleType.Description)
@@ -88,14 +88,15 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Model)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Plaque)
-                            </th>
+
                             <th>
                                 @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().HistoriesCount)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().VehiclePhotosCount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().ImageFullPath)
                             </th>
                             <th></th>
                         </tr>
@@ -104,6 +105,9 @@
                         @foreach (var item in Model.Vehicles)
                         {
                         <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Plaque)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.VehicleType.Description)
                             </td>
@@ -116,9 +120,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Model)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Plaque)
-                            </td>
+
                             <td>
                                 @Html.DisplayFor(modelItem => item.HistoriesCount)
                             </td>

@@ -3,10 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Vehicles.API.Migrations
 {
-    public partial class completeDB : Migration
+    public partial class DBComplete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "FirsName",
+                table: "AspNetUsers",
+                newName: "FirstName");
+
             migrationBuilder.CreateTable(
                 name: "Vehicles",
                 columns: table => new
@@ -16,7 +21,7 @@ namespace Vehicles.API.Migrations
                     VehicleTypeId = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     Model = table.Column<int>(type: "int", nullable: false),
-                    Plaque = table.Column<int>(type: "int", maxLength: 6, nullable: false),
+                    Plaque = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     Line = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -54,11 +59,18 @@ namespace Vehicles.API.Migrations
                     VehicleId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Mileage = table.Column<int>(type: "int", nullable: false),
-                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Histories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Histories_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Histories_Vehicles_VehicleId",
                         column: x => x.VehicleId,
@@ -127,6 +139,11 @@ namespace Vehicles.API.Migrations
                 column: "ProcedureId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Histories_UserId",
+                table: "Histories",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Histories_VehicleId",
                 table: "Histories",
                 column: "VehicleId");
@@ -171,6 +188,11 @@ namespace Vehicles.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
+
+            migrationBuilder.RenameColumn(
+                name: "FirstName",
+                table: "AspNetUsers",
+                newName: "FirsName");
         }
     }
 }

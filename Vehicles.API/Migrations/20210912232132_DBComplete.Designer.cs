@@ -10,8 +10,8 @@ using Vehicles.API.Data;
 namespace Vehicles.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210912012829_completeDB")]
-    partial class completeDB
+    [Migration("20210912232132_DBComplete")]
+    partial class DBComplete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -239,10 +239,15 @@ namespace Vehicles.API.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
@@ -303,7 +308,7 @@ namespace Vehicles.API.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirsName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -390,9 +395,10 @@ namespace Vehicles.API.Migrations
                     b.Property<int>("Model")
                         .HasColumnType("int");
 
-                    b.Property<int>("Plaque")
+                    b.Property<string>("Plaque")
+                        .IsRequired()
                         .HasMaxLength(6)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
@@ -530,11 +536,17 @@ namespace Vehicles.API.Migrations
 
             modelBuilder.Entity("Vehicles.API.Data.Entities.History", b =>
                 {
+                    b.HasOne("Vehicles.API.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.HasOne("Vehicles.API.Data.Entities.Vehicle", "Vehicle")
                         .WithMany("Histories")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
 
                     b.Navigation("Vehicle");
                 });

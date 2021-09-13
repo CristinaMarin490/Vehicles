@@ -237,10 +237,15 @@ namespace Vehicles.API.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
@@ -388,9 +393,10 @@ namespace Vehicles.API.Migrations
                     b.Property<int>("Model")
                         .HasColumnType("int");
 
-                    b.Property<int>("Plaque")
+                    b.Property<string>("Plaque")
+                        .IsRequired()
                         .HasMaxLength(6)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
@@ -528,11 +534,17 @@ namespace Vehicles.API.Migrations
 
             modelBuilder.Entity("Vehicles.API.Data.Entities.History", b =>
                 {
+                    b.HasOne("Vehicles.API.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.HasOne("Vehicles.API.Data.Entities.Vehicle", "Vehicle")
                         .WithMany("Histories")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
 
                     b.Navigation("Vehicle");
                 });

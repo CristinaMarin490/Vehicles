@@ -56,7 +56,7 @@ namespace Vehicles.API.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => VehiclePhotos == null || VehiclePhotos.Count == 0
             ? $"https://localhost:44387/images/noimage.png"
-            : VehiclePhotos.FirstOrDefault().ImaFullPath;
+            : VehiclePhotos.FirstOrDefault().ImageFullPath;
 
         public ICollection<History> Histories { get; set; }
 

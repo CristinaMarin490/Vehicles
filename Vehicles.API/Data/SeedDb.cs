@@ -28,8 +28,10 @@ namespace Vehicles.API.Data
             await CheckProceduresAsync();
             await CkeckRolesAsync();
             await CkeckUserAsync("1010", "Luis", "Salazar", "luis@yopmail.com", "3225141014","Calle 72 Sur", UserType.Admin);
+            await CkeckUserAsync("1010", "Luis", "Salazar", "luis@yopmail.com", "3225141014","Calle 72 Sur", UserType.Admin);
             await CkeckUserAsync("2020", "Juan", "Zuluaga", "zulu@yopmail.com", "3225141014", "Calle 72 Sur", UserType.User);
             await CkeckUserAsync("3030", "Ledys", "Bedoya", "ledys@yopmail.com", "3225141014", "Calle 72 Sur", UserType.User);
+            await CkeckUserAsync("4040", "Sandra", "Lopera", "sandra@yopmail.com", "3225141014", "Calle 72 Sur", UserType.Admin);
         }
 
         private async Task CkeckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)

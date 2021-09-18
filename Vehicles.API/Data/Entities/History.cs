@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Vehicles.API.Data.Entities
 {
@@ -10,14 +10,18 @@ namespace Vehicles.API.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Vehiculo")]
+        [Display(Name = "Vehículo")]
+        [JsonIgnore]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public Vehicle Vehicle { get; set; }
 
+        [Display(Name = "Fecha")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        public DateTime Date { get; set; }
 
         [Display(Name = "Fecha")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime Date { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        public DateTime DateLocal => Date.ToLocalTime();
 
         [Display(Name = "Kilometraje")]
         [DisplayFormat(DataFormatString = "{0:N0}")]
@@ -27,31 +31,26 @@ namespace Vehicles.API.Data.Entities
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
-        [Display(Name = "Mecanico")]
+        [JsonIgnore]
+        [Display(Name = "Mecánico")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public User User { get; set; }
 
         public ICollection<Detail> Details { get; set; }
 
-        [Display(Name = "Detalles")]
-        public int DetailsCount => Details == null ? 0 : DetailsCount;
+        [Display(Name = "# Detalles")]
+        public int DetailsCount => Details == null ? 0 : Details.Count;
 
-        [Display(Name = "Total Mano de obra")]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public decimal TotalSpareParts => Details == null ? 0 : Details.Sum(x => x.SparepartsPrice);
-
-        [Display(Name = "Total repuestos")]
+        [Display(Name = "Total Mano de Obra")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal TotalLabor => Details == null ? 0 : Details.Sum(x => x.LaborPrice);
 
+        [Display(Name = "Total Repuestos")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        public decimal TotalSpareParts => Details == null ? 0 : Details.Sum(x => x.SparePartsPrice);
+
         [Display(Name = "Total")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
-        public decimal Total => Details == null ? 0 : Details.Sum(x => x.Totalprice);
-
-
-
-
-
-
+        public decimal Total => Details == null ? 0 : Details.Sum(x => x.TotalPrice);
     }
 }

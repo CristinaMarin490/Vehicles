@@ -14,6 +14,8 @@ namespace Vehicles.API.Helpers
 
         Task<IdentityResult> AddUserAsync(User user, string password);
 
+        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, Common.UserType userType);
+
         Task<IdentityResult> UpdateUserAsync(User user);
 
         Task<IdentityResult> DeleteUserAsync(User user);
